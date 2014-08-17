@@ -115,7 +115,7 @@
 		</header>
 		<div class="jumbotron">
 		<p>Just fill a few fields to become a part of us</p>
-		<img class="logo" src="img/core-of-sphere-locked.jpg" align="top" alt="logo"/>
+		<img class="logo" src="img/core-of-sphere-registration.png" align="top" alt="logo"/>
 		<div id="regform">
 			<form method="post">
 				<div>
