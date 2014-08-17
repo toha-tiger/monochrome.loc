@@ -96,16 +96,25 @@
 		<title>
 			Monochrome registration
 		</title>
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/bootstrap.min.js"></script>
+		
 		<meta charset='utf-8'>
 	</head>
 	<body>
 		<header>
+		<ul class="nav nav-pills pull-right">
+			<li><a href="index.php">Home</a></li>
+			<li class="active"><a href="registration.php">Registration</a></li>
+		</ul>
 		<div>
 			<p>Just fill a few fields to become a part of us</p>
 			<h1>Monochrome registration</h1>
 		</div>
 		</header>
+		<div class="jumbotron">
 		<img class="logo" src="img/core-of-sphere-locked.jpg" align="top" alt="logo"/>
 		<div id="regform">
 			<form method="post">
@@ -135,7 +144,7 @@
 					<label class="colorselect"><input type="radio" name="fav_color" value="black" <?php echo ($fav_color=='black')?'checked':''; ?> />black</label>
 				</div>
 				<div>
-					<input id="submit" type="submit" value="Join" />
+					<input id="submit" class="btn btn-primary btn-lg" type="submit" value="Join" />
 				</div>
 			</form>
 		</div>
@@ -147,8 +156,10 @@
 			echo '</div>';
 		}
 		?>
+		</div>
+		<hr />
 		<footer>
-		<p><a href="index.php">Monochrome!</a></p>
+			<p><a href="index.php">Monochrome!</a></p>
 		</footer>
 	</body>
 </html>

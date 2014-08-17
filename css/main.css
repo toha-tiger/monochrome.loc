@@ -4,6 +4,7 @@ body {
 }
 .logo {
 	margin-bottom: 2em;
+	vertical-align: top;
 }
 #regform {
 	display: inline-block;
@@ -14,11 +15,14 @@ body {
 }
 #regform div {
 	margin-top: 1em;
-	width: 20em;
+	width: 25em;
 	text-align: left;
 }
 #regform div:last-child {
 	text-align: center;
+}
+input[type="date"] {
+    line-height: inherit;
 }
 label {
 	display: inline-block;
