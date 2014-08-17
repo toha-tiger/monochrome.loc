@@ -1,0 +1,45 @@
+body {
+	background: lightgray;
+	text-align: center;
+}
+.logo {
+	margin-bottom: 2em;
+}
+#regform {
+	display: inline-block;
+	margin-left: 2em;
+}
+#regform div:first-child {
+	margin-top: inherit;
+}
+#regform div {
+	margin-top: 1em;
+	width: 20em;
+	text-align: left;
+}
+#regform div:last-child {
+	text-align: center;
+}
+label {
+	display: inline-block;
+	width: 10em;
+}
+label.colorselect {
+	display: inline;
+	width: inherit;
+}
+
+.message {
+	text-align: center;
+	margin: 2em;
+	padding: 1em;
+}
+
+.msg_ok {
+	background: #FAFAFA;
+}
+
+.msg_error {
+	background: #0A0A0A;
+	color: white;
+}

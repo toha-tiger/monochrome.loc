@@ -4,12 +4,7 @@
 		<title>
 			Welcome to Monochrome
 		</title>
-		<style>
-		body {
-			background: lightgray;
-			text-align: center;
-		}
-		</style>
+		<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
 	</head>
 	<body>
 		<div>

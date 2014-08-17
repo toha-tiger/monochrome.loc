@@ -1,3 +1,4 @@
 Options -Indexes 
 
 RedirectMatch 403 ^.*/sql/.*$
+RedirectMatch 403 ^.*/.git/.*$
