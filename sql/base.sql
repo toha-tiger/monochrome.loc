@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(50) NOT NULL,
   `login` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `birth` date NOT NULL,
+  `color` enum('black','white') NOT NULL,
+  `birthday` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `login` (`login`)

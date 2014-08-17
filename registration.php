@@ -7,45 +7,86 @@
 		} 
 		return '';
 	}
-	function msg_empty()
+	
+	function is_taken($db, $field, $value)
 	{
-		$msg = '';
-		$args = func_get_args();
-		var_dump($args);
-die;
-		if (func_num_args() > 0)
+		//$field = $db->quote($field);
+		$value = $db->quote($value);
+		$result = $db->query("SELECT ${field} FROM users WHERE ${field} = ${value};");
+		
+		if ($result->rowCount() > 0)
 		{
-			foreach($args as $name => $arg)
-			{
-				if (empty($arg))
-				{
-					$msg .= " ${name} is empty";
-				}
-			}
+			$result->closeCursor();
+			return true;
 		}
-		return $msg;
-	}	
+		$result->closeCursor();
+		return false;
+	}
+	
 	if (!empty($_POST))
 	{
-		$message = 'There is some POST DATA<br />';
-		$message .= var_export($_POST, true);
-		$message_class = "msg_ok";
+		$message = array();
 
 		$email = get_post_var('email');
 		$login = get_post_var('login');
 		$password = get_post_var('password');
 		$confirmation = get_post_var('confirmation');
 		$birthday = get_post_var('birthday');
-		$color = get_post_var('color');
+		$fav_color = get_post_var('fav_color');
+
 		//validate input
-		var_dump(array($email, $login, $password, $confirmation, $color));
-		if (empty($email) || empty($login) || empty($password) || empty($confirmation) || empty($color))
+		if (empty($email) || empty($login) || empty($password) || empty($confirmation) || empty($fav_color))
 		{
-			$message_class = "msg_error";
-			$message = "Please fill all required fields.<br />" . empty($email)?'Email is empty ':'' . empty($login)?'Login is empty ':'' ;
+			$message_class = 'msg_error';
+			$message[] = 'Please fill in all of the required fields';
 		}
-	//	$db = new PDO('mysql:host=localhost;dbname=monochrome;charset=utf8', 'monochrome', 'R8V8YIVuQoWA');
-	//	$db->query('insert into users (email, login, pass) values ("' . $_POST['email'] . '", "' . $_POST['login'] . '", "' . $_POST['pass'] . '")');
+		if ($password != $confirmation)
+		{
+			$message_class = 'msg_error';
+			$message[] = 'Password and confirmation isn\'t match';
+		}
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			$message_class = 'msg_error';
+			$message[] = 'Incorrect email';
+		}
+
+		if ($message_class != 'msg_error')
+		{	
+			$db = new PDO('mysql:host=localhost;dbname=monochrome;charset=utf8', 'monochrome', 'R8V8YIVuQoWA');
+			if (is_taken($db, 'email', $email))
+			{
+				$message_class = 'msg_error';
+				$message[] = 'This email is already registered, please choose another one';
+			}
+			if (is_taken($db, 'login', $login))
+			{
+				$message_class = 'msg_error';
+				$message[] = 'This login already taken, please choose another one';
+			}
+		}
+		
+		if ($message_class != 'msg_error')
+		{	
+			$stmt = $db->prepare("INSERT INTO users (email, login, password, color, birthday) VALUES (?, ?, ?, ?, ?)");
+			$stmt->bindParam(1, $email);
+			$stmt->bindParam(2, $login);
+			$stmt->bindParam(3, $password);
+			$stmt->bindParam(4, $fav_color);
+			$stmt->bindParam(5, $birthday);
+			if ($stmt->execute())
+			{
+				$message_class = 'msg_ok';
+				$message[] = 'Thank you for registration';
+			} else {
+
+				$message_class = 'msg_error';
+				$message[] = 'Error adding user';
+				$message = array_merge($message, $stmt->errorInfo());
+				
+			}
+			$stmt->closeCursor();
+		}
 	
 	}
 ?>
@@ -55,7 +96,8 @@ die;
 		<title>
 			Monochrome registration
 		</title>
-	<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
+		<meta charset='utf-8'>
 	</head>
 	<body>
 		<header>
@@ -69,28 +111,28 @@ die;
 			<form method="post">
 				<div>
 					<label>E-mail:</label>
-					<input type="email" name="email" /> <!-- required -->
+					<input type="email" name="email" value="<?php echo $email; ?>" required />
 				</div>
 				<div>
 					<label>Login:</label>
-					<input type="text" name="login" /> <!-- required -->
+					<input type="text" name="login" value="<?php echo $login; ?>" required/>
 				</div>
 				<div>
 					<label>Password:</label>
-					<input type="password" name="password" /> <!-- required -->
+					<input type="password" name="password" required /> 
 				</div>
 				<div>
 					<label>Password confirmation:</label>
-					<input type="password" name="confirmation" /> <!-- required -->
+					<input type="password" name="confirmation" required />
 				</div>
 				<div>
 					<label>Your birthday date:</label>
-					<input type="date" name="birthday" />
+					<input type="date" name="birthday" value="<?php echo $birthday; ?>"/>
 				</div>
 				<div>
 					<label>Your favorite color:</label>
-					<label class="colorselect"><input type="radio" name="color" value="white"/>white</label> <!-- required -->
-					<label class="colorselect"><input type="radio" name="color" value="black"/>black</label>
+					<label class="colorselect"><input type="radio" name="fav_color" value="white" <?php echo ($fav_color=='white')?'checked':''; ?> required />white</label>
+					<label class="colorselect"><input type="radio" name="fav_color" value="black" <?php echo ($fav_color=='black')?'checked':''; ?> />black</label>
 				</div>
 				<div>
 					<input id="submit" type="submit" value="Join" />
@@ -98,10 +140,10 @@ die;
 			</form>
 		</div>
 		<?php
-		if (isset($message) && isset($message_class))
+		if (!empty($message) && isset($message_class))
 		{
 			echo "<div class=\"message ${message_class}\">";
-			echo "<p>${message}</p>";
+			echo '<p>' . implode ($message, '<br>') . '</p>';
 			echo '</div>';
 		}
 		?>
