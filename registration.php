@@ -37,36 +37,36 @@
 		//validate input
 		if (empty($email) || empty($login) || empty($password) || empty($confirmation) || empty($fav_color))
 		{
-			$message_class = 'msg_error';
+			$message_class = 'alert-danger';
 			$message[] = 'Please fill in all of the required fields';
 		}
 		if ($password != $confirmation)
 		{
-			$message_class = 'msg_error';
+			$message_class = 'alert-danger';
 			$message[] = 'Password and confirmation isn\'t match';
 		}
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
-			$message_class = 'msg_error';
+			$message_class = 'alert-danger';
 			$message[] = 'Incorrect email';
 		}
 
-		if ($message_class != 'msg_error')
+		if ($message_class != 'alert-danger')
 		{	
 			$db = new PDO('mysql:host=localhost;dbname=monochrome;charset=utf8', 'monochrome', 'R8V8YIVuQoWA');
 			if (is_taken($db, 'email', $email))
 			{
-				$message_class = 'msg_error';
+				$message_class = 'alert-danger';
 				$message[] = 'This email is already registered, please choose another one';
 			}
 			if (is_taken($db, 'login', $login))
 			{
-				$message_class = 'msg_error';
+				$message_class = 'alert-danger';
 				$message[] = 'This login already taken, please choose another one';
 			}
 		}
 		
-		if ($message_class != 'msg_error')
+		if ($message_class != 'alert-danger')
 		{	
 			$stmt = $db->prepare("INSERT INTO users (email, login, password, color, birthday) VALUES (?, ?, ?, ?, ?)");
 			$stmt->bindParam(1, $email);
@@ -76,11 +76,11 @@
 			$stmt->bindParam(5, $birthday);
 			if ($stmt->execute())
 			{
-				$message_class = 'msg_ok';
+				$message_class = 'alert-success';
 				$message[] = 'Thank you for registration';
 			} else {
 
-				$message_class = 'msg_error';
+				$message_class = 'alert-danger';
 				$message[] = 'Error adding user';
 				$message = array_merge($message, $stmt->errorInfo());
 				
@@ -110,11 +110,11 @@
 			<li class="active"><a href="registration.php">Registration</a></li>
 		</ul>
 		<div>
-			<p>Just fill a few fields to become a part of us</p>
 			<h1>Monochrome registration</h1>
 		</div>
 		</header>
 		<div class="jumbotron">
+		<p>Just fill a few fields to become a part of us</p>
 		<img class="logo" src="img/core-of-sphere-locked.jpg" align="top" alt="logo"/>
 		<div id="regform">
 			<form method="post">
@@ -131,7 +131,7 @@
 					<input type="password" name="password" required /> 
 				</div>
 				<div>
-					<label>Password confirmation:</label>
+					<label>Confirmation:</label>
 					<input type="password" name="confirmation" required />
 				</div>
 				<div>
@@ -151,15 +151,14 @@
 		<?php
 		if (!empty($message) && isset($message_class))
 		{
-			echo "<div class=\"message ${message_class}\">";
-			echo '<p>' . implode ($message, '<br>') . '</p>';
+			echo "<div class=\"alert ${message_class}\">";
+			echo '<p>' . implode ($message, '<br />') . '</p>';
 			echo '</div>';
 		}
 		?>
 		</div>
-		<hr />
 		<footer>
-			<p><a href="index.php">Monochrome!</a></p>
+			<p><a href="index.php">Monochrome!</a> &copy; 2014</p>
 		</footer>
 	</body>
 </html>

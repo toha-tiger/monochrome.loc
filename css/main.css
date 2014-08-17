@@ -33,18 +33,28 @@ label.colorselect {
 	width: inherit;
 }
 
+.alert {
+	margin: 2em;
+}
+
+.alert p {
+	font-size: inherit;
+}
+
 .message {
 	text-align: center;
 	margin: 2em;
 	padding: 1em;
 }
 
-.msg_ok {
+/*
+.alert-success {
 	background: #FAFAFA;
 }
 
-.msg_error {
+.alert-danger {
 	color: white;
 	padding-left: 5em;
 	background: url('/img/icon_exclamation_64.png') no-repeat 0.5em 0.5em #0A0A0A;
 }
+*/
