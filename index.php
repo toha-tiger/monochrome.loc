@@ -7,8 +7,8 @@
 
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/bootstrap.min.js"></script>
+		<script src="/js/jquery-1.11.0.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 		
 		<meta charset='utf-8'>
 	</head>
@@ -24,7 +24,7 @@
 		</header>
 		<div class="jumbotron">
 			<p>Welcome, random visitor</p>
-			<img class="logo" src="img/core-of-sphere.jpg"/>
+			<img class="logo" src="/img/core-of-sphere.jpg" />
 			<p>What is Monochrome? <a href="registration.php">Join us</a>, to find out</p>
 		</div>
 		<footer>
