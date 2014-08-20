@@ -2,6 +2,7 @@ body {
 	background: lightgray;
 	text-align: center;
 }
+
 .logo {
 	margin-bottom: 2em;
 	vertical-align: top;
@@ -45,4 +46,18 @@ label.colorselect {
 	text-align: center;
 	margin: 2em;
 	padding: 1em;
+}
+
+.container {
+    background: #FFF;
+    text-align: left;
+    width: inherit;
+}
+
+.col-md-4 {
+    width: 20%;
+}
+
+.col-md-8 {
+    width: 80%;
 }

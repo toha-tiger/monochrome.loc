@@ -29,6 +29,7 @@
 
 		$login = get_post_var('login');
 		$password = get_post_var('password');
+        $rememberme = get_post_var('rememberme');
 
 		//validate input
 		if (empty($login) || empty($password))
@@ -44,6 +45,10 @@
 			{
                 $message_class = 'alert-success';
                 $message[] = "Welcome, {$login}";
+                if ($rememberme == 'on')
+                {
+                    $message[] = "I will remember you!";
+                }
 			} else {
                 $message_class = 'alert-danger';
                 $message[] = 'Wrong login or password';
