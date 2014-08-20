@@ -1,1 +1,3 @@
-test site
+test site for studying php 
+
+dev server http://monochrome.twilightparadox.com:8080/
