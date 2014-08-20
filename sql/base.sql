@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `color` enum('black','white') NOT NULL,
-  `birthday` date NOT NULL,
+  `birthday` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `login` (`login`)
