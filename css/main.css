@@ -10,6 +10,7 @@ body {
 #regform, #loginform {
 	display: inline-block;
 	margin-left: 2em;
+    text-align: center;
 }
 #regform div:first-child,#loginform div:first-child {
 	margin-top: inherit;
