@@ -6,19 +6,19 @@ body {
 	margin-bottom: 2em;
 	vertical-align: top;
 }
-#regform {
+#regform, #loginform {
 	display: inline-block;
 	margin-left: 2em;
 }
-#regform div:first-child {
+#regform div:first-child,#loginform div:first-child {
 	margin-top: inherit;
 }
-#regform div {
+#regform div, #loginform div {
 	margin-top: 1em;
 	width: 25em;
 	text-align: left;
 }
-#regform div:last-child {
+#regform div:last-child, #loginform div:last-child {
 	text-align: center;
 }
 input[type="date"] {

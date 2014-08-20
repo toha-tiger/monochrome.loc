@@ -88,4 +88,4 @@
 			$stmt->closeCursor();
 		}
 	}
-include "/template/registration.html";
+include "template/registration.html";
