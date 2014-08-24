@@ -65,7 +65,7 @@ class Users extends Db {
         $error = false;
 
         if(!$this->validate_new_user()){
-            //return false;
+            return false;
         }
 
         try {
