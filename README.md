@@ -1,4 +1,4 @@
-Антон Гридасов Группа 2
+Anton.Gridasov@class2.brander.ua
 
 test site for studying php 
 

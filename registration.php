@@ -1,12 +1,5 @@
 <?php
-	function get_post_var($var)
-	{
-		if (isset($_POST[$var]))
-		{
-			return $_POST[$var];
-		} 
-		return '';
-	}
+
 	
 	function is_taken($db, $field, $value)
 	{
