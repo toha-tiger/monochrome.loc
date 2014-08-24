@@ -12,17 +12,17 @@
     <header>
         <ul class="nav nav-pills pull-right">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="/registration.php">Registration</a></li>
-            <li><a href="/login.php">Login</a></li>
+            <li><a href="<?php lib::link('registration'); ?>">Registration</a></li>
+            <li><a href="<?php lib::link('login'); ?>">Login</a></li>
         </ul>
         <div>
             <h1>Monochrome</h1>
         </div>
     </header>
     <div class="jumbotron">
-        <p>Welcome, random visitor, please <a href="/login.php">login</a></p>
+        <p>Welcome, random visitor, please <a href="<?php lib::link('login'); ?>">login</a></p>
         <img class="logo" src="/img/core-of-sphere.jpg" />
-        <p>What is Monochrome? <a href="/registration.php">Join us</a>, to find out</p>
+        <p>What is Monochrome? <a href="<?php lib::link('registration'); ?>">Join us</a>, to find out</p>
     </div>
     <footer>
         <p><a href="/">Monochrome!</a> &copy; 2014</p>

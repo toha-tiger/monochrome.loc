@@ -2,7 +2,7 @@
 
 class Db extends Config {
 
-    private $db;
+    protected $db;
 
     function __construct() {
         try {
@@ -11,8 +11,9 @@ class Db extends Config {
                                 ';charset=utf8',
                                 self::DB_USER,
                                 self::DB_PASSWORD);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            error_log ('Db construct error ' . $e->getMessage());
+            error_log ('Db->_construct error ' . $e->getMessage());
             die('Db error');
         }
     }

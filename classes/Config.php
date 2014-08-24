@@ -7,4 +7,6 @@ class Config {
     const DB_USER = 'monochrome';
     const DB_PASSWORD = 'R8V8YIVuQoWA';
 
+    const DEBUG_MODE = true;
+
 } 

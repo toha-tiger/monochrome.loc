@@ -12,8 +12,8 @@
 <header>
     <ul class="nav nav-pills pull-right">
         <li><a href="/">Home</a></li>
-        <li class="active"><a href="/registration.php">Registration</a></li>
-        <li><a href="/login.php">Login</a></li>
+        <li class="active"><a href="<?php lib::link('registration'); ?>">Registration</a></li>
+        <li><a href="<?php lib::link('login'); ?>">Login</a></li>
     </ul>
     <div>
         <h1>Monochrome registration</h1>
@@ -26,11 +26,11 @@
         <form method="post">
             <div>
                 <label>E-mail:</label>
-                <input type="email" name="email" value="<?php echo $email; ?>" required />
+                <input type="email" name="email" value="<?php echo $user_info['email']; ?>"  />
             </div>
             <div>
                 <label>Login:</label>
-                <input type="text" name="login" value="<?php echo $login; ?>" required/>
+                <input type="text" name="login" value="<?php echo $user_info['login']; ?>" />
             </div>
             <div>
                 <label>Password:</label>
@@ -42,12 +42,12 @@
             </div>
             <div>
                 <label>Your birthday date:</label>
-                <input type="date" name="birthday" value="<?php echo $birthday; ?>"/>
+                <input type="date" name="birthday" value="<?php echo $user_info['birthday']; ?>"/>
             </div>
             <div>
                 <label>Your favorite color:</label>
-                <label class="colorselect"><input type="radio" name="fav_color" value="white" <?php echo ($fav_color=='white')?'checked':''; ?> required />white</label>
-                <label class="colorselect"><input type="radio" name="fav_color" value="black" <?php echo ($fav_color=='black')?'checked':''; ?> />black</label>
+                <label class="colorselect"><input type="radio" name="fav_color" value="white" <?php echo ($user_info['fav_color']=='white')?'checked':''; ?> required />white</label>
+                <label class="colorselect"><input type="radio" name="fav_color" value="black" <?php echo ($user_info['fav_color']=='black')?'checked':''; ?> />black</label>
             </div>
             <div>
                 <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Join" />

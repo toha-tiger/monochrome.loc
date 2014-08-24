@@ -1,9 +1,22 @@
 <?php
 require 'classes/init.php';
 
+//router
+$page = lib::get_var('page');
+if (empty($page))
+{
+    $page = 'index';
+}
+$page_file = "pages/Page_${page}.php";
 
-$user = new Users();
+if (file_exists($page_file))
+{
+    include $page_file;
+    $page_class = "Page_$page";
+    $page = new $page_class;
+} else {
+    die("Page_$page doesn't exists");
+}
 
-var_dump($user);
-
-$a = lib::get_post_var($test);
+$page->show();
+//end router
