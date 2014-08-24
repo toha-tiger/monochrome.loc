@@ -1,5 +1,5 @@
 <footer>
-    <p><a href="/">Monochrome!</a> &copy; 2014</p>
+    <p><a href="/">Monochrome!</a> &copy; <?php echo date('Y'); ?></p>
 </footer>
 </body>
 </html>
