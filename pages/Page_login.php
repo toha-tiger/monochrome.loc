@@ -1,29 +1,26 @@
 <?php
 
-class Page_registration implements Pages {
+class Page_login implements Pages {
     public $metas = array(
-        'meta_title' => 'Monochrome registration',
-        'title' => 'Registration',
+        'meta_title' => 'Monochrome login',
+        'title' => 'Login',
     );
 
     function show() {
         if (!empty($_POST)) {
             $user = new Users();
             $user_info = array(
-                'email' => lib::get_post_var('email'),
                 'login' => lib::get_post_var('login'),
                 'password' => lib::get_post_var('password'),
-                'confirmation' => lib::get_post_var('confirmation'),
-                'birthday' => lib::get_post_var('birthday'),
-                'color' => lib::get_post_var('color')
+                'rememberme' => lib::get_post_var('rememberme')
             );
-            if ($user->registration($user_info)){
+            if ($user->login($user_info)){
                 $message_class = 'alert-success';
             } else {
                 $message_class = 'alert-danger';
             }
             $message = $user->message;
         }
-        include "template/registration.php";
+        include "template/login.php";
     }
 }

@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset='utf-8'>
-    <title>Welcome to Monochrome</title>
+    <title><?php echo $this->metas['meta_title']; ?></title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
     <script src="/js/jquery-2.1.1.min.js"></script>
@@ -16,16 +16,6 @@
             <li><a href="<?php lib::link('login'); ?>">Login</a></li>
         </ul>
         <div>
-            <h1>Monochrome</h1>
+            <h1><?php echo $this->metas['title']; ?></h1>
         </div>
     </header>
-    <div class="jumbotron">
-        <p>Welcome, random visitor, please <a href="<?php lib::link('login'); ?>">login</a></p>
-        <img class="logo" src="/img/core-of-sphere.jpg" />
-        <p>What is Monochrome? <a href="<?php lib::link('registration'); ?>">Join us</a>, to find out</p>
-    </div>
-    <footer>
-        <p><a href="/">Monochrome!</a> &copy; 2014</p>
-    </footer>
-</body>
-</html>
