@@ -40,6 +40,12 @@ class Validate extends Db {
                                 $this->errors[] = "{$field} doesn't math pattern";
                             }
                             break;
+                        case 'date':
+                            list($y, $m, $d) = explode('-', $value);
+                            if (!checkdate($m, $d, $y)) {
+                                $this->errors[] = "Wrong {$field} date";
+                            }
+                            break;
                         case 'unique':
                             try {
                                 $select = $this->db->prepare("SELECT `${field}` FROM {$rule_value} WHERE `${field}` = :value;");
