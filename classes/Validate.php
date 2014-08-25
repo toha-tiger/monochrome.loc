@@ -12,7 +12,7 @@ class Validate {
 				}
 
 			} elseif (!empty($value)) {
-				$this->errors[] = "{$field} is required";
+				$this->errors[] .= "{$field} is required";
 			}
 		}
 		
