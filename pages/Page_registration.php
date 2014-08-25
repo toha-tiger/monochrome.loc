@@ -5,50 +5,57 @@ class Page_registration implements Pages {
         'meta_title' => 'Monochrome registration',
         'title' => 'Registration',
     );
+    public $message;
+    public $data;
 
     function show() {
+        $validate_rules = array(
+            'email' => array(
+                'required' => true,
+                'email' => true,
+                'unique' => 'users'
+            ),
+            'login' => array(
+                'required' => true,
+                'min' => 2,
+                'max' => 50,
+                'unique' => 'users'
+            ),
+            'password' => array(
+                'required' => true,
+                'min' => 4,
+                'max' => 50,
+            ),
+            'confirmation' => array(
+                'required' => true,
+                'match' => 'password'
+            ),
+            'color' => array(
+                'required' => true,
+                'set_in' => array('white', 'black'),
+            ),
+            'birthday' => array(
+                'required' => true,
+                'preg' => '|\d{4}-\d{2}-\d{2}|'
+            )
+        );
         if (!empty($_POST)) {
+            $this->data = $_POST;
             $validate = new Validate();
-            $validate->check($_POST, array(
-                'email' => array(
-                    'required' => true,
-                    'min' => 2,
-                    'max' => 50,
-                    'unique' => 'users'
-                ),
-                'password' => array(
-                    'required' => true,
-                    'min' => 4,
-                    'max' => 50,
-                ),
-                'confirmation' => array(
-                    'required' => true,
-                    'match' => 'password'
-                ),
-                'color' => array(
-                    'required' => true,
-                    'set_in' => array('white', 'black'),
-                )
-            ));
-            if (!$validate)
-            {
-                var_dump($validate->errors);
-            }
-            $user = new Users();
-            $user_info = array(
-                'email' => lib::get_post_var('email'),
-                'login' => lib::get_post_var('login'),
-                'password' => lib::get_post_var('password'),
-                'confirmation' => lib::get_post_var('confirmation'),
-                'birthday' => lib::get_post_var('birthday'),
-                'color' => lib::get_post_var('color')
-            );
-            if ($user->registration($user_info)){
-                $message_class = 'alert-success';
+            $validate->check($_POST, $validate_rules);
+            if (count($validate->errors)) {
+                $this->message['class'] = 'alert-danger';
+                $this->message['text'] = $validate->errors;
             } else {
-                $message_class = 'alert-danger';
+                $user = new Users();
+                if ($user->registration($_POST)) {
+                    $this->message['class'] = 'alert-success';
+                    $this->message['text'][] = "Thank you for registration, {$this->data['login']}";
+                } else {
+                    $this->message['class'] = 'alert-danger';
+                    $this->message['text'] = $user->errors;
+                }
             }
-            $message = $user->message;
         }
         include "template/registration.php";
     }

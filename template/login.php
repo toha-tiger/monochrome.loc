@@ -4,17 +4,18 @@
         <img class="logo" src="/img/core-of-sphere.jpg" align="top" alt="logo"/>
         <div class="container">
             <form role="form" method="post">
+
                 <div>
                     <label for="inp_login">Login:</label>
-                    <input id="inp_login" type="text" name="login" value="<?php echo $user_info['login']; ?>" required/>
+                    <input id="inp_login" type="text" name="login" value="<?php echo $this->data['login']; ?>" <?php if($validate_rules['login']['required']) echo 'required'; ?> />
                 </div>
                 <div>
                     <label for="inp_password">Password:</label>
-                    <input id="inp_password" type="password" name="password" required />
+                    <input id="inp_password" type="password" name="password" <?php if($validate_rules['password']['required']) echo 'required'; ?> />
                 </div>
                 <div>
                     <label for="inp_rememberme">Remember me</label>
-                    <input id="inp_rememberme" type="checkbox" name="rememberme" <?php if($user_info['rememberme']=='on') echo "checked"; ?>/>
+                    <input id="inp_rememberme" type="checkbox" name="rememberme" <?php if($this->data['rememberme']=='on') echo "checked"; ?>/>
                 </div>
                 <div>
                     <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Login" />
@@ -24,9 +25,9 @@
         </div>
     </div>
     <?php
-		if (!empty($message) && isset($message_class)) {
-			echo "<div class=\"alert ${message_class}\">";
-            echo '<p>' . implode ($message, '<br />') . '</p>';
+		if (count($this->message)) {
+			echo "<div class=\"alert {$this->message['class']}\">";
+            echo '<p>' . implode ($this->message['text'], '<br />') . '</p>';
             echo '</div>';
         }
     ?>

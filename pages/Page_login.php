@@ -6,20 +6,35 @@ class Page_login implements Pages {
         'title' => 'Login',
     );
 
+    public $message;
+    public $data;
+
     function show() {
+        $validate_rules = array(
+            'login' => array(
+                'required' => true,
+            ),
+            'password' => array(
+                'required' => true,
+            )
+        );
         if (!empty($_POST)) {
-            $user = new Users();
-            $user_info = array(
-                'login' => lib::get_post_var('login'),
-                'password' => lib::get_post_var('password'),
-                'rememberme' => lib::get_post_var('rememberme')
-            );
-            if ($user->login($user_info)){
-                $message_class = 'alert-success';
+            $this->data = $_POST;
+            $validate = new Validate();
+            $validate->check($_POST, $validate_rules);
+            if (count($validate->errors)) {
+                $this->message['class'] = 'alert-danger';
+                $this->message['text'] = $validate->errors;
             } else {
-                $message_class = 'alert-danger';
+                $user = new Users();
+                if ($user->login($_POST)) {
+                    $this->message['class'] = 'alert-success';
+                    $this->message['text'][] = "Welcome, {$user->profile['login']}";
+                } else {
+                    $this->message['class'] = 'alert-danger';
+                    $this->message['text'] = $user->errors;
+                }
             }
-            $message = $user->message;
         }
         include "template/login.php";
     }
