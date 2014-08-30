@@ -21,7 +21,8 @@ class Users extends Db {
         ));
         if ($res) {
             if ($this->db_get_count()) {
-                $this->profile = $this->db_get_result()[0];
+                $tmp = $this->db_get_result();
+                $this->profile = $tmp[0];
                 Session::set('User_id', $this->profile->id);
                 $this->user_logged = true;
                 return true;
