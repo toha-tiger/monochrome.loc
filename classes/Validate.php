@@ -47,21 +47,16 @@ class Validate extends Db {
                             }
                             break;
                         case 'unique':
-                            try {
-                                $select = $this->db->prepare("SELECT `${field}` FROM {$rule_value} WHERE `${field}` = :value;");
-                                $select->bindParam(':value', $value);
-                                if ($select->execute()) {
-                                    if ($select->rowCount()) {
-                                        $this->errors[] = "{$field} is already taken";
-                                    }
+                            $query = "SELECT {$field} FRO1M {$rule_value} WHERE {$field} = ?";
+                            if($this->query($query, array($value))) {
+                                if($this->db_get_count()) {
+                                    $this->errors[] = "{$field} is already taken";
                                 }
-                            } catch (PDOException $e) {
+                            } else {
                                 $this->errors[] = "Can not check {$field}";
                                 if(self::DEBUG_MODE) {
-                                    $this->errors[] = $e->getMessage();
+                                    $this->errors = array_merge($this->errors, $this->db_get_errors());
                                 }
-                                error_log('Validate->check unique error ' . $e->getMessage());
-                                return true;
                             }
                     }
 				}

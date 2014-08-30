@@ -8,53 +8,47 @@ class Users extends Db {
     function registration($user){
         $this->profile = $user;
 
-        try {
-            $query = "INSERT INTO users (email, login, password, color, birthday)
-                      VALUES (:email, :login, :password, :color, :birthday)";
-            $insert = $this->db->prepare($query);
-            $insert->bindParam(':email', $this->profile['email']);
-            $insert->bindParam(':login', $this->profile['login']);
-            $insert->bindParam(':password', $this->profile['password']);
-            $insert->bindParam(':color', $this->profile['color']);
-            $insert->bindParam(':birthday', $this->profile['birthday']);
-            $insert->execute();
+        $query = "INSERT INTO users (email, login, password, color, birthday)
+                  VALUES (:email, :login, :password, :color, :birthday)";
+        $res = $this->query($query, array(
+            ':email' => $this->profile['email'],
+            ':login' => $this->profile['login'],
+            ':password' => $this->profile['password'],
+            ':color' => $this->profile['color'],
+            ':birthday' => $this->profile['birthday'],
+        ));
+
+        if ($res) {
             $this->message[] = $this->profile['login'] . ' Thank you for registration';
-        } catch (PDOException $e) {
+            return true;
+        } else {
             $this->errors[] = 'Error adding user';
-            if(self::DEBUG_MODE) {
-                $this->errors[] = $e->getMessage();
-            }
-            error_log ('Users->registration error ' . $e->getMessage());
+            $this->errors = array_merge($this->errors, $this->db_get_errors());
             return false;
         }
-        return true;
     }
 
     function login ($user) {
         $this->profile = $user;
-
-        try {
-            $query = "SELECT email, login, birthday, color FROM users WHERE login=:login AND password=:password";
-            $select = $this->db->prepare($query);
-            $select->bindParam(':login', $this->profile['login']);
-            $select->bindParam(':password', $this->profile['password']);
-            $select->execute();
-            if ($select->rowCount() == 1) {
-                $this->profile = $select->fetch();
+        $query = "SELECT email, login, birthday, color FROM users WHERE login=:login AND password=:password";
+        $res = $this->query($query, array(
+            ':login' => $this->profile['login'],
+            ':password' => $this->profile['password']
+        ));
+        if ($res) {
+            if ($this->db_get_count()) {
                 return true;
             } else {
                 $this->errors[] = "Wrong login or password";
-                return false;
             }
-
-        } catch (PDOException $e) {
+        } else {
             $this->errors[] = 'Error ';
             if(self::DEBUG_MODE) {
-                $this->errors[] = $e->getMessage();
+                $this->errors = array_merge($this->errors, $this->db_get_errors());
             }
-            error_log ('Users->login error ' . $e->getMessage());
-            return false;
+            error_log ('Users->login error ' . serialize($this->db_get_errors()));
         }
+        return false;
     }
 
     function logout() {

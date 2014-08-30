@@ -2,7 +2,10 @@
 
 class Db extends Config {
 
-    protected $db;
+    private $db;
+    private $db_result;
+    private $db_count;
+    private $db_errors = array();
 
     function __construct() {
         try {
@@ -22,44 +25,48 @@ class Db extends Config {
     //or
     //query('SELECT login FROM WHERE id = :id' , array(':id' => $id))
     function query($query, $params = array()) {
+        $this->db_errors[] = array();
         $stmt = $this->db->prepare($query);
-        if (!empty($params))
-        {
-            $i = 0; 
+        if (!empty($params)) {
+            $i = 1;
             foreach ($params as $param_name => $param_value) {
                 if (is_numeric($param_name)) {
                     $stmt->bindValue($i, $param_value);
                 } else {
-                    $stmt->bindParam($param_name, $param_value);
+                    $stmt->bindValue($param_name, $param_value);
                 }
                 $i++;
             }
         }
         try {
-            if ($stmt->execute()) {
-                return $stmt->fetchAll(PDO::FETCH_OBJ);
+            $stmt->execute();
+            if ($stmt->columnCount() && $stmt->rowCount()) {
+                $this->db_count = $stmt->rowCount();
+                if($this->db_count) {
+                    $this->db_result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                }
+
             }
+            return true;
         } catch (PDOException $e) {
-            $this->errors[] = 'Error ';
+            $this->db_errors[] = 'DB->query error ';
             if(self::DEBUG_MODE) {
-                $this->errors[] = $e->getMessage();
+                $this->db_errors[] = $e->getMessage();
             }
             error_log ('Db->query error ' . $e->getMessage());
         }
         return false;
     }
 
-    //get('users', array('login', '=', 'test'))
-    function get($table, $where = array()) {
-        if (count($where) == 3)
-        {
-            $field = $where[0];
-            $operator = $where[1];
-            $value = $where[2];
-            $query = "SELECT * FROM {$table} WHERE {$field} {$operator} ?";
-            $result = $this->query($query, array($value));
-            
-        }
+    function db_get_result() {
+        return $this->db_result;
+    }
 
+    function db_get_count() {
+        return $this->db_count;
+    }
+
+    public function db_get_errors() {
+        return $this->db_errors;
     }
 }
