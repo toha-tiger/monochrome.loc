@@ -7,6 +7,7 @@ class Page_index implements Pages {
     );
 
     function show() {
+        $user = new Users();
         include "template/index.php";
     }
 } 

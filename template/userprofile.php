@@ -11,9 +11,35 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="jumbotron">
-            <img class="logo" src="/img/core-of-sphere.jpg" align="top" alt="logo"/>
+<!--            <div class="jumbotron">-->
+            <h2>Your user details:</h2>
+            <div id="regform">
+                <form role="form" method="post">
+                <div>
+                    <label for="inp_email">E-mail:</label>
+                    <input id="inp_email" type="email" name="email" value="<?php echo $user->profile->email; ?>" disabled />
                 </div>
+                <div>
+                    <label for="inp_login">Login:</label>
+                    <input id="inp_login" type="text" name="login" value="<?php echo $user->profile->login; ?>"  />
+                </div>
+                <div>
+                    <label for="inp_date">Your birthday date:</label>
+                    <input id="inp_date" type="date" name="birthday" title="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<?php echo $user->profile->birthday; ?>" />
+                </div>
+                <div>
+                    <label>Your favorite color:</label>
+                    <input id="rad_color_white" type="radio" name="color" value="white" <?php echo ($user->profile->color == 'white')?'checked':''; ?> <?php if($validate_rules['color']['required']) echo 'required'; ?> />
+                    <label for="rad_color_white" class="colorselect">white</label>
+                    <input id="rad_color_black" type="radio" name="color" value="black" <?php echo ($user->profile->color == 'black')?'checked':''; ?> />
+                    <label for="rad_color_black" class="colorselect">black</label>
+                </div>
+                <div>
+                    <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Update details" />
+                </div>
+                </form>
+            </div>
+            <!--            </div>-->
         </div>
     </div>
 <?php include "_footer.php"; ?>

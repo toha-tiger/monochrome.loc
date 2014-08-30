@@ -45,7 +45,6 @@ class Db extends Config {
                 if($this->db_count) {
                     $this->db_result = $stmt->fetchAll(PDO::FETCH_OBJ);
                 }
-
             }
             return true;
         } catch (PDOException $e) {

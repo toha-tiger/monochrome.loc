@@ -47,7 +47,7 @@ class Validate extends Db {
                             }
                             break;
                         case 'unique':
-                            $query = "SELECT {$field} FRO1M {$rule_value} WHERE {$field} = ?";
+                            $query = "SELECT {$field} FROM {$rule_value} WHERE {$field} = ?;";
                             if($this->query($query, array($value))) {
                                 if($this->db_get_count()) {
                                     $this->errors[] = "{$field} is already taken";

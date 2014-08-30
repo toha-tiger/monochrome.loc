@@ -25,4 +25,10 @@ class lib {
         return "/index.php?page={$page}";
     }
 
+    static function js_redirect($page) {
+//        $js_code = 'window.location.replace("' . self::make_link($page) . '");';
+//        echo "{$js_code}";
+        return '<script type="text/javascript">window.setTimeout( function(){window.location = "' . self::make_link($page) . '" }, 5000 );</script>';
+    }
+
 } 

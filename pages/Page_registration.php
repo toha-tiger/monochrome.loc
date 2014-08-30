@@ -9,6 +9,10 @@ class Page_registration implements Pages {
     public $data;
 
     function show() {
+        $user = new Users();
+        if ($user->is_logged()) {
+            Redirect::to('index');
+        }
         $validate_rules = array(
             'email' => array(
                 'required' => true,
@@ -48,10 +52,10 @@ class Page_registration implements Pages {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-                $user = new Users();
                 if ($user->registration($_POST)) {
                     $this->message['class'] = 'alert-success';
                     $this->message['text'][] = "Thank you for registration, {$this->data['login']}";
+                    $this->message['text'][] = lib::js_redirect('login');
                 } else {
                     $this->message['class'] = 'alert-danger';
                     $this->message['text'] = $user->errors;

@@ -6,7 +6,12 @@ class Page_userprofile implements Pages {
         'title' => 'Profile',
     );
 
-    function show(){
+    function show() {
+        $user = new Users();
+        if (!$user->is_logged()) {
+            Redirect::to('login');
+        }
+        $this->metas['title'] = $user->profile->login . ' profile';
         include 'template/userprofile.php';
     }
 }

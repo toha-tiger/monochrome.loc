@@ -11,9 +11,15 @@
 <body>
     <header>
         <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="<?php lib::link('registration'); ?>">Registration</a></li>
-            <li><a href="<?php lib::link('login'); ?>">Login</a></li>
+<!--            class="active"-->
+            <li><a href="/">Home</a></li>
+            <?php if ($user->is_logged()): ?>
+                <li><a href="<?php lib::link('userprofile'); ?>">Profile</a></li>
+                <li><a href="<?php lib::link('logout'); ?>">Logout</a></li>
+            <?php else: ?>
+                <li><a href="<?php lib::link('registration'); ?>">Registration</a></li>
+                <li><a href="<?php lib::link('login'); ?>">Login</a></li>
+            <?php endif; ?>
         </ul>
         <div>
             <h1><?php echo $this->metas['title']; ?></h1>
