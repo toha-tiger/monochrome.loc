@@ -17,7 +17,7 @@
                 <form role="form" method="post">
                 <div>
                     <label for="inp_email">E-mail:</label>
-                    <input id="inp_email" type="email" name="email" value="<?php echo $user->profile->email; ?>" disabled />
+                    <input id="inp_email" type="email" name="email" value="<?php echo $user->profile->email; ?>" />
                 </div>
                 <div>
                     <label for="inp_login">Login:</label>
@@ -25,7 +25,7 @@
                 </div>
                 <div>
                     <label for="inp_date">Your birthday date:</label>
-                    <input id="inp_date" type="date" name="birthday" title="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<?php echo $user->profile->birthday; ?>" />
+                    <input id="inp_date" type="date" name="birthday" title="YYYY-MM-DD" placeholder="YYYY-MM-DD" pattern="<?php echo $validate_rules['birthday']['preg'];?>" value="<?php echo $user->profile->birthday; ?>" />
                 </div>
                 <div>
                     <label>Your favorite color:</label>
@@ -38,6 +38,14 @@
                     <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Update details" />
                 </div>
                 </form>
+                <?php
+                //&& isset($message_class)
+                if (count($this->message) ) {
+                    echo "<div class=\"alert {$this->message['class']}\">";
+                    echo '<p>' . implode ($this->message['text'], '<br />') . '</p>';
+                    echo '</div>';
+                }
+                ?>
             </div>
             <!--            </div>-->
         </div>

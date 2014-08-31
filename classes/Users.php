@@ -60,11 +60,11 @@ class Users extends Db {
         }
     }
 
-    public function login ($user) {
+    public function login ($user_data) {
         $query = "SELECT id, email, login, birthday, color FROM users WHERE login=:login AND password=:password";
         $res = $this->query($query, array(
-            ':login' => $user['login'],
-            ':password' => $user['password']
+            ':login' => $user_data['login'],
+            ':password' => $user_data['password']
         ));
         if ($res) {
             if ($this->db_get_count()) {
@@ -84,6 +84,35 @@ class Users extends Db {
             error_log ('Users->login error ' . serialize($this->db_get_errors()));
         }
         return false;
+    }
+
+    public function update ($user_data) {
+        $query = "UPDATE users
+                SET email = :email, login = :login, color = :color, birthday = :birthday
+                WHERE id = :id
+        ";
+        echo $query;
+        $res = $this->query($query, array(
+            ':email' => $user_data['email'],
+            ':login' => $user_data['login'],
+            ':color' => $user_data['color'],
+            ':birthday' => $user_data['birthday'],
+            ':id' => $this->profile->id,
+        ));
+        if ($res) {
+            $this->user_get($this->profile->id);
+            $this->message[] = $this->profile->login . ', your profile is updated';
+            return true;
+        } else {
+            $this->errors[] = 'Error updating profile';
+            $this->errors = array_merge($this->errors, $this->db_get_errors());
+            return false;
+        }
+
+    }
+
+    public function check_password() {
+
     }
 
     public function logout() {

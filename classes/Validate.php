@@ -8,7 +8,7 @@ class Validate extends Db {
 			$value = $data[$field];
 			if ($rules['required'] && !empty($value)) {
 				foreach ($rules as $rule => $rule_value) {
-					switch ($rule) {
+                    switch ($rule) {
                         case 'email':
                             if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                                 $this->errors[] = 'Wrong email address';
@@ -36,7 +36,7 @@ class Validate extends Db {
                             }
                             break;
                         case 'preg':
-                            if(!preg_match("{$rule_value}", $value)) {
+                            if (!preg_match("{$rule_value}", $value)) {
                                 $this->errors[] = "{$field} doesn't math pattern";
                             }
                             break;
@@ -47,21 +47,36 @@ class Validate extends Db {
                             }
                             break;
                         case 'unique':
-                            $query = "SELECT {$field} FROM {$rule_value} WHERE {$field} = ?;";
-                            if($this->query($query, array($value))) {
-                                if($this->db_get_count()) {
+                            $query = "SELECT {$field} FROM {$rule_value} WHERE {$field} = ?";
+                            if ($this->query($query, array($value))) {
+                                if ($this->db_get_count()) {
                                     $this->errors[] = "{$field} is already taken";
                                 }
                             } else {
                                 $this->errors[] = "Can not check {$field}";
-                                if(self::DEBUG_MODE) {
+                                if (self::DEBUG_MODE) {
                                     $this->errors = array_merge($this->errors, $this->db_get_errors());
                                 }
                             }
+                            break;
+                        case 'one_unique':
+                            $table = $rule_value[0];
+                            $skip = $rule_value[1];
+                            $query = "SELECT {$field} FROM {$table} WHERE {$field} = ? AND {$field} <> ?";
+                            if ($this->query($query, array($value, $skip))) {
+                                if ($this->db_get_count()) {
+                                    $this->errors[] = "{$field} is already taken";
+                                }
+                            } else {
+                                $this->errors[] = "Can not check {$field}";
+                                if (self::DEBUG_MODE) {
+                                    $this->errors = array_merge($this->errors, $this->db_get_errors());
+                                }
+                            }
+                            break;
                     }
-				}
-
-			} elseif ($rules['required']) {
+                }
+            } elseif ($rules['required']) {
 				$this->errors[] = "{$field} is required";
 			}
 		}

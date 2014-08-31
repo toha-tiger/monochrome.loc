@@ -10,7 +10,6 @@ class Page_login implements Pages {
     public $data;
 
     function show() {
-
         $user = new Users();
         if ($user->is_logged()) {
             Redirect::to('index');
@@ -32,7 +31,6 @@ class Page_login implements Pages {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-//                $user = new Users();
                 if ($user->login($_POST)) {
                     $this->message['class'] = 'alert-success';
                     $this->message['text'][] = "Welcome, {$user->profile->login}";
