@@ -25,10 +25,20 @@ class lib {
         return "/index.php?page={$page}";
     }
 
-    static function js_redirect($page) {
-//        $js_code = 'window.location.replace("' . self::make_link($page) . '");';
-//        echo "{$js_code}";
-        return '<script type="text/javascript">window.setTimeout( function(){window.location = "' . self::make_link($page) . '" }, 5000 );</script>';
+    static function js_redirect($page)
+    {
+        $id = 'a' . uniqid();
+        $js_code = '
+            <div id="' . $id . '"></div>
+            <script type = "text/javascript" >
+                document.getElementById("' .$id . '").innerHTML =
+                    "<div>Redirecting to ' . $page . ' page in 5 sec</div>" ;
+                window . setTimeout(function () {
+                    window . location = "' . self::make_link($page) . '";
+                     }, 5000);
+        </script>
+        ';
+        return $js_code;
     }
 
 } 

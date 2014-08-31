@@ -16,6 +16,11 @@
             <div id="regform">
                 <form role="form" method="post">
                 <div>
+                    <label>ID:</label>
+                    <input type="text" value="<?php echo $user->profile->id; ?>" disabled />
+                </div>
+
+                <div>
                     <label for="inp_email">E-mail:</label>
                     <input id="inp_email" type="email" name="email" value="<?php echo $user->profile->email; ?>" />
                 </div>
