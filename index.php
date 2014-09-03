@@ -17,6 +17,10 @@ if (file_exists($page_file))
 } else {
     die("Page_$page doesn't exists");
 }
-
-$page->show();
+$action = lib::get_var('action');
+if (empty($action))
+{
+    $action = 'show';
+}
+$page->$action();
 //end router

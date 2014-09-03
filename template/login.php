@@ -24,12 +24,6 @@
             </form>
         </div>
     </div>
-    <?php
-		if (count($this->message)) {
-			echo "<div class=\"alert {$this->message['class']}\">";
-            echo '<p>' . implode ($this->message['text'], '<br />') . '</p>';
-            echo '</div>';
-        }
-    ?>
+    <?php include "message.php"; ?>
 </div>
 <?php include "_footer.php"; ?>

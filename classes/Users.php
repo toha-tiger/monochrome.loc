@@ -108,11 +108,54 @@ class Users extends Db {
             $this->errors = array_merge($this->errors, $this->db_get_errors());
             return false;
         }
-
     }
 
-    public function check_password() {
+    public function changepassword ($user_data) {
+        if(!$this->check_password($user_data['oldpassword'])){
+            $this->errors[] = 'Wrong old password';
+            return false;
+        }
+        $query = "UPDATE users
+                SET password = :password
+                WHERE id = :id
+        ";
+        echo $query;
+        $res = $this->query($query, array(
+            ':password' => $user_data['password'],
+            ':id' => $this->profile->id,
+        ));
+        if ($res) {
+            $this->user_get($this->profile->id);
+            $this->message[] = $this->profile->login . ', your password has changed';
+            return true;
+        } else {
+            $this->errors[] = 'Error changing password';
+            $this->errors = array_merge($this->errors, $this->db_get_errors());
+            return false;
+        }
+    }
 
+
+    public function check_password($password) {
+        $query = "SELECT id FROM users WHERE id=:id AND password=:password";
+        $res = $this->query($query, array(
+            ':password' => $password,
+            ':id' => $this->profile->id
+        ));
+        if ($res) {
+            if ($this->db_get_count()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $this->errors[] = 'Error ';
+            if(self::DEBUG_MODE) {
+                $this->errors = array_merge($this->errors, $this->db_get_errors());
+            }
+            error_log ('Users->check_password error ' . serialize($this->db_get_errors()));
+        }
+        return false;
     }
 
     public function logout() {

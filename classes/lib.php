@@ -17,12 +17,16 @@ class lib {
         return '';
     }
 
-    static function link($page) {
-        echo self::make_link($page);
+    static function link($page, $action = null) {
+        echo self::make_link($page, $action);
     }
 
-    static function make_link($page) {
-        return "/index.php?page={$page}";
+    static function make_link($page, $action = null) {
+        if (!empty($action)){
+            return "/index.php?page={$page}&action={$action}";
+        } else {
+            return "/index.php?page={$page}";
+        }
     }
 
     static function js_redirect($page)

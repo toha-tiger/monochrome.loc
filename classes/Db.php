@@ -26,6 +26,7 @@ class Db extends Config {
     //query('SELECT login FROM WHERE id = :id' , array(':id' => $id))
     function query($query, $params = array()) {
         $this->db_errors[] = array();
+        $this->db_count = null;
         $stmt = $this->db->prepare($query);
         if (!empty($params)) {
             $i = 1;

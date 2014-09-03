@@ -6,7 +6,7 @@ class Page_userprofile implements Pages {
         'title' => 'Profile',
     );
 
-    function show() {
+    public function show() {
         $user = new Users();
         if (!$user->is_logged()) {
             Redirect::to('login');
@@ -52,7 +52,47 @@ class Page_userprofile implements Pages {
                 }
             }
         }
-
         include 'template/userprofile.php';
+    }
+    public function changepassword() {
+        $user = new Users();
+        if (!$user->is_logged()) {
+            Redirect::to('login');
+        }
+        $this->metas['title'] = $user->profile->login . ' change password';
+
+        $validate_rules = array(
+            'oldpassword' => array(
+                'required' => true,
+            ),
+            'password' => array(
+                'required' => true,
+                'min' => 4,
+                'max' => 50,
+            ),
+            'confirmation' => array(
+                'required' => true,
+                'match' => 'password',
+            )
+        );
+        if (!empty($_POST)) {
+            $this->data = $_POST;
+            $validate = new Validate();
+            $validate->check($_POST, $validate_rules);
+            if (count($validate->errors)) {
+                $this->message['class'] = 'alert-danger';
+                $this->message['text'] = $validate->errors;
+            } else {
+                if ($user->changepassword($_POST)) {
+                    $this->message['class'] = 'alert-success';
+                    $this->message['text'][] = "{$user->profile->login}, your password has been changed";
+                } else {
+                    $this->message['class'] = 'alert-danger';
+                    $this->message['text'] = $user->errors;
+                }
+            }
+        }
+        include 'template/changepassword.php';
+
     }
 }

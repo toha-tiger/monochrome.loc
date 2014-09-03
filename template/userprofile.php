@@ -5,13 +5,13 @@
                 <a class="list-group-item active" href="#">Profile</a>
                 <a class="list-group-item" href="#">Photos</a>
                 <a class="list-group-item" href="#">Groups</a>
+                <a class="list-group-item" href="<?php lib::link('userprofile', 'changepassword')?>">Change password</a>
             </div>
             <div class="well well-sm">
                 <p>some info's here</p>
             </div>
         </div>
         <div class="col-md-8">
-<!--            <div class="jumbotron">-->
             <h2>Your user details:</h2>
             <div id="regform">
                 <form role="form" method="post">
@@ -43,16 +43,8 @@
                     <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Update details" />
                 </div>
                 </form>
-                <?php
-                //&& isset($message_class)
-                if (count($this->message) ) {
-                    echo "<div class=\"alert {$this->message['class']}\">";
-                    echo '<p>' . implode ($this->message['text'], '<br />') . '</p>';
-                    echo '</div>';
-                }
-                ?>
+                <?php include "message.php"; ?>
             </div>
-            <!--            </div>-->
         </div>
     </div>
 <?php include "_footer.php"; ?>
