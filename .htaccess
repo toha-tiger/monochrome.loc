@@ -1,4 +1,4 @@
 Options -Indexes 
 
-RedirectMatch 403 ^.*/sql/.*$
-RedirectMatch 403 ^.*/.git/.*$
+RedirectMatch 403 ^.*/(sql|.git)/.*$
+RedirectMatch 403 ^.*/(pages|template|classes)/.*$

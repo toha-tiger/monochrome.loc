@@ -1,4 +1,4 @@
-<?php include "_head.php"; ?>
+<?php include "head.php"; ?>
     <div class="container jumbotron">
         <div class="col-md-4">
             <div class="list-group">
@@ -47,4 +47,4 @@
             </div>
         </div>
     </div>
-<?php include "_footer.php"; ?>
+<?php include "footer.php"; ?>

@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Db {
+class User_model extends Db {
 
     public $profile = array();
     public $errors = array();
@@ -166,6 +166,4 @@ class Users extends Db {
     public function is_logged() {
         return $this->user_logged;
     }
-
-
-} 
+}

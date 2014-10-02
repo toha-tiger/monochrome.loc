@@ -14,11 +14,11 @@
 <!--            class="active"-->
             <li><a href="/">Home</a></li>
             <?php if ($user->is_logged()): ?>
-                <li><a href="<?php lib::link('userprofile'); ?>">Profile</a></li>
-                <li><a href="<?php lib::link('logout'); ?>">Logout</a></li>
+                <li><a href="<?php lib::link('user', 'profile'); ?>">Profile</a></li>
+                <li><a href="<?php lib::link('user', 'logout'); ?>">Logout</a></li>
             <?php else: ?>
-                <li><a href="<?php lib::link('registration'); ?>">Registration</a></li>
-                <li><a href="<?php lib::link('login'); ?>">Login</a></li>
+                <li><a href="<?php lib::link('user', 'registration'); ?>">Registration</a></li>
+                <li><a href="<?php lib::link('user', 'login'); ?>">Login</a></li>
             <?php endif; ?>
         </ul>
         <div>

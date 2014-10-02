@@ -29,7 +29,7 @@ class lib {
         }
     }
 
-    static function js_redirect($page)
+    static function js_redirect($page, $action = null)
     {
         $id = 'a' . uniqid();
         $js_code = '
@@ -38,7 +38,7 @@ class lib {
                 document.getElementById("' .$id . '").innerHTML =
                     "<div>Redirecting to ' . $page . ' page in 5 sec</div>" ;
                 window . setTimeout(function () {
-                    window . location = "' . self::make_link($page) . '";
+                    window . location = "' . self::make_link($page, $action) . '";
                      }, 5000);
         </script>
         ';

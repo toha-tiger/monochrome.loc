@@ -1,4 +1,4 @@
-<?php include "_head.php"; ?>
+<?php include "head.php"; ?>
 <div class="jumbotron">
     <div id="loginform" class="container">
         <img class="logo" src="/img/core-of-sphere.jpg" align="top" alt="logo"/>
@@ -26,4 +26,4 @@
     </div>
     <?php include "message.php"; ?>
 </div>
-<?php include "_footer.php"; ?>
+<?php include "footer.php"; ?>
