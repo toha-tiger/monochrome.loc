@@ -91,7 +91,6 @@ class User_model extends Db {
                 SET email = :email, login = :login, color = :color, birthday = :birthday
                 WHERE id = :id
         ";
-        echo $query;
         $res = $this->query($query, array(
             ':email' => $user_data['email'],
             ':login' => $user_data['login'],
@@ -119,7 +118,6 @@ class User_model extends Db {
                 SET password = :password
                 WHERE id = :id
         ";
-        echo $query;
         $res = $this->query($query, array(
             ':password' => $user_data['password'],
             ':id' => $this->profile->id,

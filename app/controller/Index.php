@@ -8,8 +8,6 @@ class Index extends Controller {
             'title' => 'Welcome to Monochrome',
         );
 
-        $user = new User_model();
-
-        include "_template/index.php";
+        $this->render_view('Index/index');
     }
 } 

@@ -1,11 +1,10 @@
-<?php include "head.php"; ?>
     <div class="container jumbotron">
         <div class="col-md-4">
             <div class="list-group">
                 <a class="list-group-item active" href="#">Profile</a>
                 <a class="list-group-item" href="#">Photos</a>
                 <a class="list-group-item" href="#">Groups</a>
-                <a class="list-group-item" href="<?php lib::link('userprofile', 'changepassword')?>">Change password</a>
+                <a class="list-group-item" href="<?php lib::link('user', 'changepassword')?>">Change password</a>
             </div>
             <div class="well well-sm">
                 <p>some info's here</p>
@@ -43,8 +42,7 @@
                     <input id="submit" class="btn btn-primary btn-lg" type="submit" value="Update details" />
                 </div>
                 </form>
-                <?php include "message.php"; ?>
+                <?php include BASE_PATH . '/view/_template/message.php'; ?>
             </div>
         </div>
     </div>
-<?php include "footer.php"; ?>

@@ -1,4 +1,3 @@
-<?php include "view/_template/head.php"; ?>
 <div class="jumbotron">
     <p>Just fill a few fields to become a part of us</p>
     <img class="logo" src="/img/form-icon.png" align="top" alt="logo"/>
@@ -36,6 +35,5 @@
             </div>
         </form>
     </div>
-    <?php include "view/_template/message.php"; ?>
+    <?php include BASE_PATH . '/view/_template/message.php'; ?>
 </div>
-<?php include "view/_template/footer.php"; ?>

@@ -4,23 +4,22 @@ class User extends Controller {
     public $data = array();
 
     public function show() {
-        $user = new User_model();
-        if (!$user->is_logged()) {
+        if (!$this->user->is_logged()) {
             Redirect::to('login');
         }
-        $this->metas['title'] = $user->profile->login . ' profile';
+        $this->metas['title'] = $this->user->profile->login . ' profile';
 
         $validate_rules = array(
             'email' => array(
                 'required' => true,
                 'email' => true,
-                'one_unique' => array('users', $user->profile->email)
+                'one_unique' => array('users', $this->user->profile->email)
             ),
             'login' => array(
                 'required' => true,
                 'min' => 2,
                 'max' => 50,
-                'one_unique' => array('users', $user->profile->login)
+                'one_unique' => array('users', $this->user->profile->login)
             ),
             'color' => array(
                 'required' => true,
@@ -40,16 +39,16 @@ class User extends Controller {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-                if ($user->update($_POST)) {
+                if ($this->user->update($_POST)) {
                     $this->message['class'] = 'alert-success';
-                    $this->message['text'][] = "{$user->profile->login}, your profile is updated";
+                    $this->message['text'][] = "{$this->user->profile->login}, your profile is updated";
                 } else {
                     $this->message['class'] = 'alert-danger';
-                    $this->message['text'] = $user->errors;
+                    $this->message['text'] = $this->user->errors;
                 }
             }
         }
-        include '_template/userprofile.php';
+        $this->render_view('User/userprofile');
     }
 
     public function registration()
@@ -58,8 +57,8 @@ class User extends Controller {
         'meta_title' => 'Monochrome registration',
         'title' => 'Registration',
         );
-        $user = new User_model();
-        if ($user->is_logged()) {
+
+        if ($this->user->is_logged()) {
             Redirect::to('index');
         }
         $validate_rules = array(
@@ -101,17 +100,17 @@ class User extends Controller {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-                if ($user->registration($_POST)) {
+                if ($this->user->registration($_POST)) {
                     $this->message['class'] = 'alert-success';
                     $this->message['text'][] = "Thank you for registration, {$this->data['login']}";
-                    $this->message['text'][] = lib::js_redirect('login');
+                    $this->message['text'][] = lib::js_redirect('user', 'login');
                 } else {
                     $this->message['class'] = 'alert-danger';
-                    $this->message['text'] = $user->errors;
+                    $this->message['text'] = $this->user->errors;
                 }
             }
         }
-        $this->get_view('registration', array('user' => $user));
+        $this->render_view('User/registration');
     }
 
     public function login() {
@@ -119,8 +118,7 @@ class User extends Controller {
             'meta_title' => 'Monochrome login',
             'title' => 'Login',
         );
-        $user = new User_model();
-        if ($user->is_logged()) {
+        if ($this->user->is_logged()) {
             Redirect::to('index');
             exit;
         }
@@ -140,23 +138,22 @@ class User extends Controller {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-                if ($user->login($_POST)) {
+                if ($this->user->login($_POST)) {
                     $this->message['class'] = 'alert-success';
-                    $this->message['text'][] = "Welcome, {$user->profile->login}";
-                    $this->message['text'][] = lib::js_redirect('userprofile');
+                    $this->message['text'][] = "Welcome, {$this->user->profile->login}";
+                    $this->message['text'][] = lib::js_redirect('user');
                 } else {
                     $this->message['class'] = 'alert-danger';
-                    $this->message['text'] = $user->errors;
+                    $this->message['text'] = $this->user->errors;
                 }
             }
         }
-        $this->get_view('login', array('user' => $user));
+        $this->render_view('User/login');
     }
 
     public function logout() {
-        $user = new User_model();
-        if ($user->is_logged()) {
-            $user->logout();
+        if ($this->user->is_logged()) {
+            $this->user->logout();
         }
         Redirect::to('index');
     }
@@ -167,11 +164,10 @@ class User extends Controller {
             'title' => 'Profile',
         );
 
-        $user = new User_model();
-        if (!$user->is_logged()) {
+        if (!$this->user->is_logged()) {
             Redirect::to('login');
         }
-        $this->metas['title'] = $user->profile->login . ' change password';
+        $this->metas['title'] = $this->user->profile->login . ' change password';
 
         $validate_rules = array(
             'oldpassword' => array(
@@ -195,18 +191,15 @@ class User extends Controller {
                 $this->message['class'] = 'alert-danger';
                 $this->message['text'] = $validate->errors;
             } else {
-                if ($user->changepassword($_POST)) {
+                if ($this->user->changepassword($_POST)) {
                     $this->message['class'] = 'alert-success';
-                    $this->message['text'][] = "{$user->profile->login}, your password has been changed";
+                    $this->message['text'][] = "{$this->user->profile->login}, your password has been changed";
                 } else {
                     $this->message['class'] = 'alert-danger';
-                    $this->message['text'] = $user->errors;
+                    $this->message['text'] = $this->user->errors;
                 }
             }
         }
-        include '_template/changepassword.php';
-
+        $this->render_view('User/changepassword');
     }
-
-
-} 
+}
